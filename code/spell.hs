@@ -42,16 +42,16 @@ oneStepEdits word = concat $ [deletes, transposes, replaces, inserts]
 
 -- twoStepEdits word = concatMap oneStepEdits (oneStepEdits word)
 --
--- topEdit :: Hist -> [String] -> (String,Int)
--- topEdit hist ws = maximumBy (comparing snd) $ map (\w -> (w,M.lookupDefault 0 w hist)) ws
---
--- correct hist word
---         | word `M.member` hist = word
---         | snd topOne > 0 = fst topOne
---         | snd topTwo > 0 = fst topTwo
---         | otherwise = word
---    where
---    oneSteps = oneStepEdits word
---    twoSteps = concatMap oneStepEdits oneSteps
---    topOne = topEdit hist oneSteps
---    topTwo = topEdit hist twoSteps
+topEdit :: Hist -> [String] -> (String,Int)
+topEdit hist ws = maximumBy (comparing snd) $ map (\w -> (w,M.lookupDefault 0 w hist)) ws
+
+correct hist word
+  | word `M.member` hist = word
+  | snd topOne > 0 = fst topOne
+  | snd topTwo > 0 = fst topTwo
+  | otherwise = word
+    where
+      oneSteps = oneStepEdits word
+      twoSteps = concatMap oneStepEdits oneSteps
+      topOne = topEdit hist oneSteps
+      topTwo = topEdit hist twoSteps
