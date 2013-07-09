@@ -55,3 +55,11 @@ correct hist word
       twoSteps = concatMap oneStepEdits oneSteps
       topOne = topEdit hist oneSteps
       topTwo = topEdit hist twoSteps
+
+data Edit = Deletion
+          | Insertion
+          | Substitution
+          | Transposition
+
+findEditSequence :: String -> String -> [Edit]
+findEditSequence word misspelling
